@@ -8,7 +8,7 @@ using namespace std;
 #define WIDTH 1040
 #define HEIGHT 640
 //定义食物以及蛇的大小
-#define SIZE  20
+#define SIZE  5
 //定义蛇的朝向
 #define UP 1
 #define DOWN -1
@@ -64,8 +64,6 @@ table:
 		FlushBatchDraw();
 		snake.Draw();
 		food.Draw();
-		FlushBatchDraw();
-		EndBatchDraw();//双缓冲，防止屏幕一闪一闪的
 		if (snake.Eat(food)) {
 			goto table;
 		}
@@ -175,7 +173,6 @@ void Snake::Move() {
 //绘制蛇
 void Snake::Draw() {
 	cleardevice();//清空原先的绘图
-	//srand((unsigned)time(NULL));//设置随机数种子
 	for (int i = 0; i < this->length; i++) {
 		setfillcolor(YELLOW);
 		fillrectangle(this->node[i].x, this->node[i].y, this->node[i].x + SIZE, this->node[i].y + SIZE);
