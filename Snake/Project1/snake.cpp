@@ -8,7 +8,7 @@ using namespace std;
 #define WIDTH 1040
 #define HEIGHT 640
 //定义食物以及蛇的大小
-#define SIZE  5
+#define SIZE  20
 //定义蛇的朝向
 #define UP 1
 #define DOWN -1
@@ -51,7 +51,6 @@ public:
 	void Draw();				//绘制食物
 private:
 	int x, y;					//坐标
-	int score;					//分数
 };
 
 int main() {
@@ -64,7 +63,7 @@ table:
 		FlushBatchDraw();
 		snake.Draw();
 		food.Draw();
-		if (snake.Eat(food)) {
+		if (snake.Eat(food)){
 			goto table;
 		}
 		if (snake.Defeat()) {
@@ -182,22 +181,22 @@ void Snake::Draw() {
 //吃食物
 bool Snake::Eat(Food food) {
 	if (food.x == this->node[0].x && food.y == this->node[0].y) {
-		if (this->node[length - 1].x - this->node[length - 2].x == 0 && this->node[length - 1].y - this->node[length - 2].y == -20) {
+		if (this->node[length - 1].x - this->node[length - 2].x == 0 && this->node[length - 1].y - this->node[length - 2].y == -SIZE) {
 			this->length++;
 			this->node[length - 1].x = this->node[length - 2].x;
 			this->node[length - 1].y = this->node[length - 2].y - SIZE;
 		}
-		if (this->node[length - 1].x - this->node[length - 2].x == 0 && this->node[length - 1].y - this->node[length - 2].y == 20) {
+		if (this->node[length - 1].x - this->node[length - 2].x == 0 && this->node[length - 1].y - this->node[length - 2].y == SIZE) {
 			this->length++;
 			this->node[length - 1].x = this->node[length - 2].x;
 			this->node[length - 1].y = this->node[length - 2].y + SIZE;
 		}
-		if (this->node[length - 1].x - this->node[length - 2].x == 20 && this->node[length - 1].y - this->node[length - 2].y == 0) {
+		if (this->node[length - 1].x - this->node[length - 2].x == SIZE && this->node[length - 1].y - this->node[length - 2].y == 0) {
 			this->length++;
 			this->node[length - 1].x = this->node[length - 2].x + SIZE;
 			this->node[length - 1].y = this->node[length - 2].y;
 		}
-		if (this->node[length - 1].x - this->node[length - 2].x == -20 && this->node[length - 1].y - this->node[length - 2].y == 0) {
+		if (this->node[length - 1].x - this->node[length - 2].x == -SIZE && this->node[length - 1].y - this->node[length - 2].y == 0) {
 			this->length++;
 			this->node[length - 1].x = this->node[length - 2].x - SIZE;
 			this->node[length - 1].y = this->node[length - 2].y;
@@ -227,10 +226,8 @@ bool Snake::Defeat() {
 Food::Food(Snake snake)
 {
 table:
-	srand((unsigned)time(NULL));
 	this->x = (rand() % (WIDTH / SIZE)) * SIZE;
 	this->y = (rand() % (HEIGHT / SIZE)) * SIZE;
-	this->score = rand() % 10 + 1;
 	for (int i = 0; i < snake.length; i++) {
 		if (snake.node[i].x == this->x && snake.node[i].y == this->y) {
 			goto table;
