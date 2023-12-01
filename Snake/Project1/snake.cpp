@@ -1,14 +1,13 @@
 #include<iostream>
-using namespace std;
 #include<easyx.h>		//包含图形库头文件
 #include<stdlib.h>
 #include<time.h>
-
+using namespace std;
 //定义场景大小
 #define WIDTH 1040
 #define HEIGHT 640
 //定义食物以及蛇的大小
-#define SIZE  20
+#define SIZE  15
 //定义蛇的朝向
 #define UP 1
 #define DOWN -1
@@ -24,7 +23,7 @@ typedef struct {
 }SnakeNode;
 
 SnakeNode tmp[MAXLEN];	//用另外一个数组来存储蛇原来的位置
-int speed = 90;		//蛇的速度(用在睡眠函数里面)
+int speed = 80;		//蛇的速度(用在睡眠函数里面)
 
 //创建蛇的类
 class Snake
@@ -191,7 +190,7 @@ void Snake::Move() {
 void Snake::Draw() {
 	cleardevice();//清空原先的绘图
 	for (int i = 0; i < this->length; i++) {
-		setfillcolor(YELLOW);
+		setfillcolor(GREEN);
 		fillrectangle(this->node[i].x, this->node[i].y, this->node[i].x + SIZE, this->node[i].y + SIZE);
 	}
 }
@@ -255,6 +254,6 @@ table:
 
 //绘制食物
 void Food::Draw() {
-	setfillcolor(GREEN);
+	setfillcolor(YELLOW);
 	fillrectangle(this->x, this->y, this->x + SIZE, this->y + SIZE);
 }
