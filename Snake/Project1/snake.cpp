@@ -56,14 +56,32 @@ private:
 int main() {
 	initgraph(WIDTH, HEIGHT);
 	Snake snake;
+	Food food_tmp(snake);
+	int flog = 0;
 table:
 	Food food(snake);
+	Food food2(snake);
+	if (flog == 1) {
+		food2 = food_tmp;
+	}
+	else if (flog == 2) {
+		food = food_tmp;
+	}
 	while (1) {
 		BeginBatchDraw();
 		FlushBatchDraw();
 		snake.Draw();
 		food.Draw();
+		food2.Draw();
 		if (snake.Eat(food)){
+			food_tmp = food2;
+			flog = 1;
+			goto table;
+
+		}
+		else if (snake.Eat(food2)) {
+			food_tmp = food;
+			flog = 2;
 			goto table;
 		}
 		if (snake.Defeat()) {
