@@ -19,11 +19,17 @@ public:
 		this->num = 0;
 	}
 };
-void Draw(column arr[]) {
+void Draw(column arr[],int tmp) {
 	cleardevice();
 	for (int i = 0; i <= LENTH - 1; i++) {
 		int Left_X = i * SIZE;
 		int Right_X = (i + 1) * SIZE;
+		if (i==tmp) {
+			fillrectangle(Left_X, arr[i].High, Right_X, HIGH);
+			setfillcolor(WHITE);
+		}
+
+		
 		fillrectangle(Left_X, arr[i].High, Right_X, HIGH);
 		setfillcolor(GREEN);
 	}
@@ -52,13 +58,17 @@ int main()
 	initgraph(WIDTH,HIGH);// 创建绘图窗口，大小为 1040x640 像素
 	BeginBatchDraw();
 	Rand(square);
+	int tmp;
+	int i_tmp;
 	for (int i = 1; i <= LENTH - 1; ++i) {
-		FlushBatchDraw();
-			for (int j = 0; j < LENTH - 1 - i; ++j)
+		//FlushBatchDraw();
+			for (int j = 0; j < LENTH - i ; ++j){
+				FlushBatchDraw();
 				if (square[j].num > square[j + 1].num)
 					swap(square[j], square[j + 1]);
-			Draw(square);
-			Sleep(10);
+					tmp = j;
+					Draw(square, tmp);
+			}
 		}
 	EndBatchDraw();
 	while (true){}
